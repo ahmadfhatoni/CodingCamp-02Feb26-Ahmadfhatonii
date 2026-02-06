@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="fantasy"></html>`
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List - Ahmadfhatonii</title>
+    <!-- css external -->
+    <link rel="stylesheet" href="CSS/style.css" />
+    
+    <!--- Tailwind CSS & Daisy UI CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.18.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="res/favicon.ico" />
+
+    <script src="https://fpyf8.com/88/tag.min.js" data-zone="165420" async data-cfasync="false"></script>
+    <title>TO-DO List - Ahmadfhatonii</title>
+</head>
+<body>
+    <nav class="mb-4">
+                <a href="https://github.com/ahmadfhatoni/" class="text-blue-500 hover:underline flex items-center">
+                    <i class="bx bx-arrow-back text-2xl mr-2"></i>
+                    Back to Ahmadfhatoni's GitHub
+                </a>
+         </nav>
+    <section class="container mx-auto p-4">
+        <!-- Header Content -->
+            <header>
+                <h1>Todo List</h1>
+                <!-- pesan error -->
+                <section class="alert-message"></section>
+                <!-- progress -->
+                <section class="progress-container mb-4 w-full">
+                    <section class="stats stats-horizontal shadow w-full mb-4">
+                        <section class="stat">
+                        <section class="stat-figure text-primary">
+                            <i class="bx bx-task text-2xl"></i>
+                        </section>
+                        <section class="stat-title">Total Tasks</section>
+                        <section class="stat-value text-primary total-counter">0</section>
+                        </section>
+
+                        <section class="stat">
+                        <section class="stat-figure text-success">
+                            <i class="bx bx-check-circle text-2xl"></i>
+                        </section>
+                        <section class="stat-title">Completed</section>
+                        <section class="stat-value text-success completed-counter">0</section>
+                        </section>
+
+                        <section class="stat">
+                        <section class="stat-figure text-warning">
+                            <i class="bx bx-time text-2xl"></i>
+                        </section>
+                        <section class="stat-title">Pending</section>
+                        <section class="stat-value text-warning pending-counter">0</section>
+                        </section>
+
+                        <section class="stat">
+                        <section class="stat-figure text-info">
+                            <i class="bx bx-pie-chart-alt text-2xl"></i>
+                        </section>
+                        <section class="stat-title">Progress</section>
+                        <section class="stat-value text-info percentage-display">0%</section>
+                    </section>
+                </section> 
+                <section class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                    <section
+                    class="progress-bar bg-primary h-3 rounded-full transition-all duration-500"
+                    style="width: 0%"
+                    aria-valuenow="0"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    ></section>
+                </section>
+            </header>
+
+            <!-- Main Content -->
+            <main>
+                <!-- Form Section -->
+                <section class="input-section flex pt-2 justify-between w-full gap-4 ">
+                    <form class="flex flex-1 gap-4">
+                        <!-- Todo Input -->
+                        <input class="flex-1 border p-2 rounded" type="text" id="todo-input" placeholder="Enter a new todo item">
+
+                        <!-- Date Input -->
+                        <input class="flex-1 border p-2 rounded" type="date" id="todo-date" placeholder="Enter due date">
+                    </form>
+                    <!-- Add Button -->
+                    <button class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addTodo()" type="button">Add
+                        Todo</button>
+                </section>
+                
+                <!-- Search Section -->
+                <section class="search-section w-full">
+                    <!-- Search Input -->
+                    <section class="relative w-full ">
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <input class="border p-2 rounded w-full pl-10 search-input" type="text" id="search-input" placeholder="Search todos..." oninput="searchTodos()">                        
+                    </section>
+                </section>
+                
+                <!-- Sort and Filter Section -->
+                <section class="sort-filter-section flex justify-between w-full">
+                    <section class="flex gap-4">
+                        <!-- Sort Button -->
+                        <select class="dropdown-content menu p-2 shadow bg-gray-200 hover:bg-gray-300 semi-rounded-box w-52" id="sort-todos" onchange="sortTodos()">
+                            <option value="default">Sort Todo</option>
+                            <option value="date-asc">Due Date Ascending</option>
+                            <option value="date-desc">Due Date Descending</option>
+                        </select>
+                        <!-- Filter Dropdown -->
+                        <select class="dropdown-content menu p-2 shadow bg-gray-200 hover:bg-gray-300 semi-rounded-box w-52" id="filter-status" onchange="filterTodos()">  
+                            <option value="all">Filter Todo</option>
+                            <option value="completed">Completed</option>
+                            <option value="pending">Pending</option>
+                        </select>           
+                    </section>
+                    <!-- Clear All Button -->
+                    <button class="border rounded p-2 bg-red-500 text-white" onclick="deleteAllTodos()">Clear All Todos</button>                   
+                </section>
+
+                <!-- Todo List Section -->
+                <section class="table-container overflow-x-auto pt-4 w-full">
+                    <!-- bordered table -->
+
+                    <table class="table table-zebra w-full bordered">
+                        <thead>
+                            <tr>
+                                <th class="w-2/5 text-center">Task</th>
+                                <th class="w-1/5 text-center">Due Date</th>
+                                <th class="w-1/5 text-center">Status</th>
+                                <th class="w-1/5 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todo-list" class="list-disc pl-5 text-center">
+                            <!-- Todo items will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+    </section>
+
+    <!-- Footer Content -->
+    <footer class="author-text">
+        <p class="text-center text-gray-500 text-sm mt-8">&copy; 2024 Ahmadfhatonii. All rights reserved.</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>
